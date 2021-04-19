@@ -1,0 +1,185 @@
+# See https://wiki.debian.org/RaspberryPi3 for known issues and more details.
+# changes af 
+# / is the tag for the new rootfs
+
+
+steps:
+  - mkimg: "{{ output }}"
+    size: 1500M
+
+  - mklabel: msdos
+    device: "{{ output }}"
+
+  - mkpart: primary
+    fs-type: 'fat32'
+    device: "{{ output }}"
+    start: 0%
+    end: 20%
+    tag: /boot
+
+  - mkpart: primary
+    device: "{{ output }}"
+    start: 20%
+    end: 100%
+    tag: /
+
+  - kpartx: "{{ output }}"
+
+  - mkfs: vfat
+    partition: /boot
+    label: RASPIFIRM
+
+  - mkfs: ext4
+    partition: /
+    label: RASPIROOT
+
+  - mount: /
+
+  - mount: /boot
+    mount-on: /
+    dirname: '/boot/firmware'
+
+  - unpack-rootfs: /
+
+  - qemu-debootstrap: bullseye
+    mirror: http://deb.debian.org/debian
+    target: /
+    arch: arm64
+    components:
+    - main
+    - contrib
+    - non-free
+    unless: rootfs_unpacked
+
+  - create-file: /etc/apt/sources.list
+    trailing-newline: '1'
+    contents: |
+      deb http://deb.debian.org/debian bullseye main contrib non-free
+      # Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free
+      # Backports are _not_ enabled by default.
+      # Enable them by uncommenting the following line:
+      # deb http://deb.debian.org/debian bullseye-backports main contrib non-free
+    unless: rootfs_unpacked
+
+  - chroot: /
+    shell: |
+      apt-get update
+    unless: rootfs_unpacked
+
+  - apt: install
+    packages:
+    - ssh
+    - parted
+    - dosfstools
+    - iw
+    - wpasupplicant
+    - raspi-firmware
+    - linux-image-arm64
+    - firmware-brcm80211
+    # additions af
+    # - python3 
+    # - sudo 
+    tag: /
+    unless: rootfs_unpacked
+
+  - cache-rootfs: /
+    unless: rootfs_unpacked
+
+  # - ansible: /
+  #   playbook: hostnamePassword.yml
+    # set name to testhost 
+   
+  - create-file: /etc/hostname 
+    contents: "rpi_4_test47" 
+
+  - chroot: /
+    shell: |
+      sed -i 's,^root:[^:]*:,root::,' /etc/passwd
+  # - rootfs: /
+  #     shell: |
+  #       # Allow root logins locally with no password
+  #       sed -i 's,root:[^:]*:,root::,' "${ROOT?}/etc/shadow"
+
+  - copy-file: /etc/fstab 
+    src: rootfs/etc/fstab 
+
+  - copy-file: /etc/network/interfaces.d/eth0 
+    src: rootfs/etc/network/interfaces.d/eth0
+
+  - copy-file: /etc/network/interfaces.d/wlan0
+    src: rootfs/etc/network/interfaces.d/wlan0
+    perm: 0600
+
+  - copy-file: /usr/local/sbin/rpi-set-sysconf  
+    src: rootfs/usr/local/sbin/rpi-set-sysconf
+    perm: 0755
+  - copy-file: /etc/systemd/system/rpi-set-sysconf.service
+    src: rootfs/etc/systemd/system/rpi-set-sysconf.service 
+  - copy-file: /boot/firmware/sysconf.txt
+    src: rootfs/boot/firmware/sysconf.txt
+    #4
+  - create-dir: /etc/systemd/system/basic.target.requires
+  # - copy-file: /etc/systemd/system/basic.target.requires/rpi-set-sysconf.servic
+  #   src: rootfs/etc/systemd/system/basic.target.requires/rpi-set-sysconf.servic 
+  - copy-file: /usr/sbin/rpi-resizerootfs
+    src: rootfs/usr/sbin/rpi-resizerootfs
+    perm: 0755
+  - copy-file: /etc/systemd/system/rpi-resizerootfs.service
+    src: rootfs/etc/systemd/system/rpi-resizerootfs.service
+    perm: 0644
+    #7
+  - create-dir: /etc/systemd/system/systemd-remount-fs.service.requires/
+  - copy-file: etc/systemd/system/rpi-reconfigure-raspi-firmware.service
+    src: rootfs/etc/systemd/system/rpi-reconfigure-raspi-firmware.service
+    perm: 0644
+    #9
+  - create-dir: /etc/systemd/system/multi-user.target.requires
+  - copy-file: etc/systemd/system/rpi-generate-ssh-host-keys.service  
+    src: rootfs/etc/systemd/system/rpi-generate-ssh-host-keys.service  
+  - copy-file: /etc/systemd/system/rpi-generate-ssh-host-keys.service
+    src: rootfs/etc/systemd/system/rpi-generate-ssh-host-keys.service
+
+
+  - shell: |
+      ln -s /etc/systemd/system/rpi-set-sysconf.service "${ROOT?}/etc/systemd/system/basic.target.requires/rpi-set-sysconf.service"
+
+      ln -s /etc/systemd/system/rpi-resizerootfs.service "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/rpi-resizerootfs.service"
+
+      ln -s /etc/systemd/system/rpi-reconfigure-raspi-firmware.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi-reconfigure-raspi-firmware.service"
+
+      ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi-generate-ssh-host-keys.service"
+
+      rm -f "${ROOT?}"/etc/ssh/ssh_host_*_key*
+    root-fs: /
+
+  # Copy the relevant device tree files to the boot partition
+  - chroot: /
+    shell: |
+      install -m 644 -o root -g root usr/lib/linux-image-*-arm64/broadcom/bcm*rpi*.dtb /boot/firmware/
+
+  # Clean up archive cache (likely not useful) and lists (likely outdated) to
+  # reduce image size by several hundred megabytes.
+  - chroot: /
+    shell: |
+      apt-get clean
+      rm -rf /var/lib/apt/lists
+
+  # Modify the kernel commandline we take from the firmware to boot from
+  # the partition labeled raspiroot instead of forcing it to mmcblk0p2
+  #
+  # These changes will be overwritten after the hardware is probed
+  # after dpkg reconfigures raspi-firmware (upon first boot).
+  - chroot: /
+    shell: |
+      sed -i 's/^/console=ttyS1,115200 /' /boot/firmware/cmdline.txt
+      sed -i 's/cma=64M //' /boot/firmware/cmdline.txt
+      sed -i 's/cma=$CMA //' /etc/kernel/postinst.d/z50-raspi-firmware
+      sed -i 's/.dev.mmcblk0p2/LABEL=RASPIROOT/' /boot/firmware/cmdline.txt
+      sed -i 's/cma=64M //' /boot/firmware/cmdline.txt
+      sed -i 's/cma=$CMA //' /etc/kernel/postinst.d/z50-raspi-firmware
+
+  # TODO(https://github.com/larswirzenius/vmdb2/issues/24): remove once vmdb
+  # clears /etc/resolv.conf on its own.
+  - shell: |
+      rm "${ROOT?}/etc/resolv.conf"
+    root-fs: /
