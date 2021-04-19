@@ -1,0 +1,11 @@
+input file is raspi_bullseye_47 --> test 47
+requires the folder rootfs (for files to include) 
+command: 
+sudo vmdb2 --output t47.img raspi_4_bullseye_47.yaml --log r47.log --rootfs-tarball t47.tar.gz
+gives baseline.
+then change to test48 with loading python 
+
+t48 with python3 fails, but with python (which is likely python2) succeeds in loading 
+t49 tests the same with an ansible roles 
+sudo vmdb2 --output t49.img raspi_4_bullseye_49.yaml --log r49.log --rootfs-tarball t48.tar.gz
+needs change in ansible.yml (python3 -> python)
