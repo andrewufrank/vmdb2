@@ -1,0 +1,1060 @@
+2021-04-19 13:35:52 INFO Starting vmdb2 version 0.22
+2021-04-19 13:35:52 INFO Load spec file raspi_4_bullseye_49.yaml
+2021-04-19 13:35:52 INFO Exec: ['dpkg', '--print-architecture']
+2021-04-19 13:35:52 DEBUG STDOUT: amd64
+
+2021-04-19 13:35:52 DEBUG STDERR: 
+2021-04-19 13:35:52 INFO Running step: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:35:52 INFO Calling <bound method MkimgStepRunner.run of <mkimg_plugin.MkimgStepRunner object at 0x7fb8be00eac0>>
+2021-04-19 13:35:52 INFO Exec: ['qemu-img', 'create', '-f', 'raw', 't49.img', '1500M']
+2021-04-19 13:35:52 DEBUG STDOUT: Formatting 't49.img', fmt=raw size=1572864000
+
+2021-04-19 13:35:52 DEBUG STDERR: 
+2021-04-19 13:35:52 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkimg_plugin.MkimgStepRunner object at 0x7fb8be00eac0>>
+2021-04-19 13:35:52 INFO Running step: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:35:52 INFO Calling <bound method MklabelStepRunner.run of <mklabel_plugin.MklabelStepRunner object at 0x7fb8be00ed30>>
+2021-04-19 13:35:52 INFO Exec: ['parted', '-s', 't49.img', 'mklabel', 'msdos']
+2021-04-19 13:35:53 DEBUG STDOUT: 
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mklabel_plugin.MklabelStepRunner object at 0x7fb8be00ed30>>
+2021-04-19 13:35:53 INFO Running step: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:35:53 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7fb8be00ec40>>
+2021-04-19 13:35:53 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:35:53 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'fat32', '0%', '20%']
+2021-04-19 13:35:53 DEBUG STDOUT: 
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:35:53 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7fb8be00ec40>>
+2021-04-19 13:35:53 INFO Running step: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:35:53 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7fb8be00ec40>>
+2021-04-19 13:35:53 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:35:53 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'ext2', '20%', '100%']
+2021-04-19 13:35:53 DEBUG STDOUT: 
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:35:53 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+2:315MB:1573MB:1258MB:::;
+
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7fb8be00ec40>>
+2021-04-19 13:35:53 INFO Running step: {'kpartx': 't49.img'}
+2021-04-19 13:35:53 INFO Calling <bound method KpartxStepRunner.run of <kpartx_plugin.KpartxStepRunner object at 0x7fb8be00ea00>>
+2021-04-19 13:35:53 INFO Exec: ['kpartx', '-asv', 't49.img']
+2021-04-19 13:35:53 DEBUG STDOUT: add map loop0p1 (254:14): 0 612352 linear 7:0 2048
+add map loop0p2 (254:15): 0 2457600 linear 7:0 614400
+
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO remembering /dev/mapper/loop0p1 as /boot
+2021-04-19 13:35:53 INFO remembering /dev/mapper/loop0p2 as /
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <kpartx_plugin.KpartxStepRunner object at 0x7fb8be00ea00>>
+2021-04-19 13:35:53 INFO Running step: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:35:53 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7fb8be00ea30>>
+2021-04-19 13:35:53 INFO Exec: ['/sbin/mkfs', '-t', 'vfat', '-n', 'RASPIFIRM', '/dev/mapper/loop0p1']
+2021-04-19 13:35:53 DEBUG STDOUT: mkfs.fat 4.2 (2021-01-31)
+
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7fb8be00ea30>>
+2021-04-19 13:35:53 INFO Running step: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:35:53 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7fb8be00ea30>>
+2021-04-19 13:35:53 INFO Exec: ['/sbin/mkfs', '-t', 'ext4', '-L', 'RASPIROOT', '/dev/mapper/loop0p2']
+2021-04-19 13:35:53 DEBUG STDOUT: Discarding device blocks:   4096/307200             done                            
+Creating filesystem with 307200 4k blocks and 76800 inodes
+Filesystem UUID: a9214c3e-252b-41a9-9292-d7a6670ba1d2
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/10     done                            
+Writing inode tables:  0/10     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/10     done
+
+
+2021-04-19 13:35:53 DEBUG STDERR: mke2fs 1.46.2 (28-Feb-2021)
+
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7fb8be00ea30>>
+2021-04-19 13:35:53 INFO Running step: {'mount': '/'}
+2021-04-19 13:35:53 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7fb8be00ea90>>
+2021-04-19 13:35:53 INFO Exec: ['mount', '/dev/mapper/loop0p2', '/tmp/tmp9dukgjws']
+2021-04-19 13:35:53 DEBUG STDOUT: 
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7fb8be00ea90>>
+2021-04-19 13:35:53 INFO Running step: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:35:53 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7fb8be00ea90>>
+2021-04-19 13:35:53 INFO Exec: ['mount', '/dev/mapper/loop0p1', '/tmp/tmp9dukgjws/.//boot/firmware']
+2021-04-19 13:35:53 DEBUG STDOUT: 
+2021-04-19 13:35:53 DEBUG STDERR: 
+2021-04-19 13:35:53 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7fb8be00ea90>>
+2021-04-19 13:35:53 INFO Running step: {'unpack-rootfs': '/'}
+2021-04-19 13:35:53 INFO Calling <bound method UnpackCacheStepRunner.run of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fb8be00ea60>>
+2021-04-19 13:35:53 DEBUG settings: {'rootfs-tarball': 't48.tar.gz'}
+2021-04-19 13:35:53 DEBUG tar_path: 't48.tar.gz'
+2021-04-19 13:35:53 INFO Exec: ['tar', '-C', '/tmp/tmp9dukgjws', '-xf', 't48.tar.gz', '--numeric-owner']
+2021-04-19 13:35:59 DEBUG STDOUT: 
+2021-04-19 13:35:59 DEBUG STDERR: 
+2021-04-19 13:35:59 INFO Exec: ['cp', '/etc/resolv.conf', '/tmp/tmp9dukgjws/etc/resolv.conf']
+2021-04-19 13:35:59 DEBUG STDOUT: 
+2021-04-19 13:35:59 DEBUG STDERR: 
+2021-04-19 13:35:59 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fb8be00ea60>>
+2021-04-19 13:35:59 INFO Running step: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:35:59 INFO Skipping as requested by unless
+2021-04-19 13:35:59 INFO Calling <bound method QemuDebootstrapStepRunner.run_even_if_skipped of <qemudebootstrap_plugin.QemuDebootstrapStepRunner object at 0x7fb8be00e9a0>>
+2021-04-19 13:35:59 INFO Exec: ['chroot', '/tmp/tmp9dukgjws', 'apt-get', 'update']
+2021-04-19 13:36:07 DEBUG STDOUT: Hit:1 http://deb.debian.org/debian bullseye InRelease
+Reading package lists...
+
+2021-04-19 13:36:07 DEBUG STDERR: 
+2021-04-19 13:36:07 INFO Running step: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:07 INFO Skipping as requested by unless
+2021-04-19 13:36:07 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <create_file_plugin.CreateFileStepRunner object at 0x7fb8be00e940>>
+2021-04-19 13:36:07 INFO Running step: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:07 INFO Skipping as requested by unless
+2021-04-19 13:36:07 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <chroot_plugin.ChrootStepRunner object at 0x7fb8be00eb20>>
+2021-04-19 13:36:07 INFO Running step: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:07 INFO Skipping as requested by unless
+2021-04-19 13:36:07 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <apt_plugin.AptStepRunner object at 0x7fb8be00ec70>>
+2021-04-19 13:36:07 INFO Running step: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:07 INFO Skipping as requested by unless
+2021-04-19 13:36:07 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <cache_rootfs_plugin.MakeCacheStepRunner object at 0x7fb8be00ebe0>>
+2021-04-19 13:36:07 INFO Running step: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:36:07 INFO Calling <bound method AnsibleStepRunner.run of <ansible_plugin.AnsibleStepRunner object at 0x7fb8be00eca0>>
+2021-04-19 13:36:07 INFO Created /tmp/tmp_d0uftwh for Ansible inventory
+2021-04-19 13:36:07 INFO Created /tmp/tmpfssvpq9y for Ansible variables
+2021-04-19 13:36:07 INFO Exec: ['ansible-playbook', '-c', 'chroot', '-i', '/tmp/tmp_d0uftwh', '-e', '@/tmp/tmpfssvpq9y', 'hostnamePassword.yml']
+2021-04-19 13:36:09 DEBUG STDOUT: 
+PLAY [image] **********************************************************************
+
+TASK [Gathering Facts] ************************************************************
+fatal: [/tmp/tmp9dukgjws]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"setup": {"failed": true, "module_stderr": "/bin/sh: 1: /usr/bin/python3: not found\n", "module_stdout": "", "msg": "The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error", "rc": 127}}, "msg": "The following modules failed to execute: setup\n"}
+
+PLAY RECAP ************************************************************************
+/tmp/tmp9dukgjws           : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+2021-04-19 13:36:09 DEBUG STDERR: 
+2021-04-19 13:36:09 ERROR Program failed: 2
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:36:09 ERROR RuncmdError('Program failed: 2')
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:36:09 INFO Something went wrong, cleaning up!
+2021-04-19 13:36:09 INFO Running teardown: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:36:09 INFO Calling <bound method AnsibleStepRunner.teardown of <ansible_plugin.AnsibleStepRunner object at 0x7fb8be00eca0>>
+2021-04-19 13:36:09 INFO Removing /tmp/tmp_d0uftwh
+2021-04-19 13:36:09 INFO Running teardown: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:09 INFO Skipping as requested by unless
+2021-04-19 13:36:09 INFO Running teardown: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:09 INFO Skipping as requested by unless
+2021-04-19 13:36:09 INFO Running teardown: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:09 INFO Skipping as requested by unless
+2021-04-19 13:36:09 INFO Running teardown: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:09 INFO Skipping as requested by unless
+2021-04-19 13:36:09 INFO Running teardown: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:36:09 INFO Skipping as requested by unless
+2021-04-19 13:36:09 INFO Running teardown: {'unpack-rootfs': '/'}
+2021-04-19 13:36:09 INFO Calling <bound method StepRunnerInterface.teardown of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fb8be00ea60>>
+2021-04-19 13:36:09 INFO Running teardown: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:36:09 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7fb8be00ea90>>
+2021-04-19 13:36:09 DEBUG Unmounting /tmp/tmp9dukgjws/.//boot/firmware and everything on top of it
+2021-04-19 13:36:09 WARNING Not mounted: /tmp/tmp9dukgjws/.//boot/firmware
+2021-04-19 13:36:09 INFO Running teardown: {'mount': '/'}
+2021-04-19 13:36:09 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7fb8be00ea90>>
+2021-04-19 13:36:09 DEBUG Unmounting /tmp/tmp9dukgjws and everything on top of it
+2021-04-19 13:36:10 DEBUG Finished unmounting /tmp/tmp9dukgjws
+2021-04-19 13:36:10 INFO Running teardown: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:36:10 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7fb8be00ea30>>
+2021-04-19 13:36:10 INFO Running teardown: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:36:10 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7fb8be00ea30>>
+2021-04-19 13:36:10 INFO Running teardown: {'kpartx': 't49.img'}
+2021-04-19 13:36:10 INFO Calling <bound method KpartxStepRunner.teardown of <kpartx_plugin.KpartxStepRunner object at 0x7fb8be00ea00>>
+2021-04-19 13:36:10 INFO Exec: ['kpartx', '-dsv', 't49.img']
+2021-04-19 13:36:10 DEBUG STDOUT: del devmap : loop0p2
+del devmap : loop0p1
+
+2021-04-19 13:36:10 DEBUG STDERR: loop deleted : /dev/loop0
+
+2021-04-19 13:36:10 INFO Running teardown: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:36:10 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7fb8be00ec40>>
+2021-04-19 13:36:10 INFO Running teardown: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:36:10 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7fb8be00ec40>>
+2021-04-19 13:36:10 INFO Running teardown: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:36:10 INFO Calling <bound method StepRunnerInterface.teardown of <mklabel_plugin.MklabelStepRunner object at 0x7fb8be00ed30>>
+2021-04-19 13:36:10 INFO Running teardown: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:36:10 INFO Calling <bound method StepRunnerInterface.teardown of <mkimg_plugin.MkimgStepRunner object at 0x7fb8be00eac0>>
+2021-04-19 13:36:10 ERROR An error occurred, exiting
+2021-04-19 13:37:57 INFO Starting vmdb2 version 0.22
+2021-04-19 13:37:57 INFO Load spec file raspi_4_bullseye_49.yaml
+2021-04-19 13:37:57 INFO Exec: ['dpkg', '--print-architecture']
+2021-04-19 13:37:57 DEBUG STDOUT: amd64
+
+2021-04-19 13:37:57 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Running step: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:37:58 INFO Calling <bound method MkimgStepRunner.run of <mkimg_plugin.MkimgStepRunner object at 0x7fecaff0cac0>>
+2021-04-19 13:37:58 INFO Exec: ['qemu-img', 'create', '-f', 'raw', 't49.img', '1500M']
+2021-04-19 13:37:58 DEBUG STDOUT: Formatting 't49.img', fmt=raw size=1572864000
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkimg_plugin.MkimgStepRunner object at 0x7fecaff0cac0>>
+2021-04-19 13:37:58 INFO Running step: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:37:58 INFO Calling <bound method MklabelStepRunner.run of <mklabel_plugin.MklabelStepRunner object at 0x7fecaff0cd30>>
+2021-04-19 13:37:58 INFO Exec: ['parted', '-s', 't49.img', 'mklabel', 'msdos']
+2021-04-19 13:37:58 DEBUG STDOUT: 
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mklabel_plugin.MklabelStepRunner object at 0x7fecaff0cd30>>
+2021-04-19 13:37:58 INFO Running step: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:37:58 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7fecaff0cc40>>
+2021-04-19 13:37:58 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:37:58 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'fat32', '0%', '20%']
+2021-04-19 13:37:58 DEBUG STDOUT: 
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:37:58 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7fecaff0cc40>>
+2021-04-19 13:37:58 INFO Running step: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:37:58 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7fecaff0cc40>>
+2021-04-19 13:37:58 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:37:58 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'ext2', '20%', '100%']
+2021-04-19 13:37:58 DEBUG STDOUT: 
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:37:58 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+2:315MB:1573MB:1258MB:::;
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7fecaff0cc40>>
+2021-04-19 13:37:58 INFO Running step: {'kpartx': 't49.img'}
+2021-04-19 13:37:58 INFO Calling <bound method KpartxStepRunner.run of <kpartx_plugin.KpartxStepRunner object at 0x7fecaff0ca00>>
+2021-04-19 13:37:58 INFO Exec: ['kpartx', '-asv', 't49.img']
+2021-04-19 13:37:58 DEBUG STDOUT: add map loop0p1 (254:14): 0 612352 linear 7:0 2048
+add map loop0p2 (254:15): 0 2457600 linear 7:0 614400
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO remembering /dev/mapper/loop0p1 as /boot
+2021-04-19 13:37:58 INFO remembering /dev/mapper/loop0p2 as /
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <kpartx_plugin.KpartxStepRunner object at 0x7fecaff0ca00>>
+2021-04-19 13:37:58 INFO Running step: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:37:58 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7fecaff0ca30>>
+2021-04-19 13:37:58 INFO Exec: ['/sbin/mkfs', '-t', 'vfat', '-n', 'RASPIFIRM', '/dev/mapper/loop0p1']
+2021-04-19 13:37:58 DEBUG STDOUT: mkfs.fat 4.2 (2021-01-31)
+
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7fecaff0ca30>>
+2021-04-19 13:37:58 INFO Running step: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:37:58 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7fecaff0ca30>>
+2021-04-19 13:37:58 INFO Exec: ['/sbin/mkfs', '-t', 'ext4', '-L', 'RASPIROOT', '/dev/mapper/loop0p2']
+2021-04-19 13:37:58 DEBUG STDOUT: Discarding device blocks:   4096/307200             done                            
+Creating filesystem with 307200 4k blocks and 76800 inodes
+Filesystem UUID: 25def740-e1ff-46c5-a2bb-fa6d93315129
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/10     done                            
+Writing inode tables:  0/10     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/10     done
+
+
+2021-04-19 13:37:58 DEBUG STDERR: mke2fs 1.46.2 (28-Feb-2021)
+
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7fecaff0ca30>>
+2021-04-19 13:37:58 INFO Running step: {'mount': '/'}
+2021-04-19 13:37:58 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7fecaff0ca90>>
+2021-04-19 13:37:58 INFO Exec: ['mount', '/dev/mapper/loop0p2', '/tmp/tmprasi749r']
+2021-04-19 13:37:58 DEBUG STDOUT: 
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7fecaff0ca90>>
+2021-04-19 13:37:58 INFO Running step: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:37:58 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7fecaff0ca90>>
+2021-04-19 13:37:58 INFO Exec: ['mount', '/dev/mapper/loop0p1', '/tmp/tmprasi749r/.//boot/firmware']
+2021-04-19 13:37:58 DEBUG STDOUT: 
+2021-04-19 13:37:58 DEBUG STDERR: 
+2021-04-19 13:37:58 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7fecaff0ca90>>
+2021-04-19 13:37:58 INFO Running step: {'unpack-rootfs': '/'}
+2021-04-19 13:37:58 INFO Calling <bound method UnpackCacheStepRunner.run of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fecaff0ca60>>
+2021-04-19 13:37:58 DEBUG settings: {'rootfs-tarball': 't48.tar.gz'}
+2021-04-19 13:37:58 DEBUG tar_path: 't48.tar.gz'
+2021-04-19 13:37:58 INFO Exec: ['tar', '-C', '/tmp/tmprasi749r', '-xf', 't48.tar.gz', '--numeric-owner']
+2021-04-19 13:38:07 DEBUG STDOUT: 
+2021-04-19 13:38:07 DEBUG STDERR: 
+2021-04-19 13:38:07 INFO Exec: ['cp', '/etc/resolv.conf', '/tmp/tmprasi749r/etc/resolv.conf']
+2021-04-19 13:38:07 DEBUG STDOUT: 
+2021-04-19 13:38:07 DEBUG STDERR: 
+2021-04-19 13:38:07 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fecaff0ca60>>
+2021-04-19 13:38:07 INFO Running step: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:07 INFO Skipping as requested by unless
+2021-04-19 13:38:07 INFO Calling <bound method QemuDebootstrapStepRunner.run_even_if_skipped of <qemudebootstrap_plugin.QemuDebootstrapStepRunner object at 0x7fecaff0c9a0>>
+2021-04-19 13:38:07 INFO Exec: ['chroot', '/tmp/tmprasi749r', 'apt-get', 'update']
+2021-04-19 13:38:12 DEBUG STDOUT: Hit:1 http://deb.debian.org/debian bullseye InRelease
+Reading package lists...
+
+2021-04-19 13:38:12 DEBUG STDERR: 
+2021-04-19 13:38:12 INFO Running step: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:12 INFO Skipping as requested by unless
+2021-04-19 13:38:12 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <create_file_plugin.CreateFileStepRunner object at 0x7fecaff0c940>>
+2021-04-19 13:38:12 INFO Running step: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:12 INFO Skipping as requested by unless
+2021-04-19 13:38:12 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <chroot_plugin.ChrootStepRunner object at 0x7fecaff0cb20>>
+2021-04-19 13:38:12 INFO Running step: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:12 INFO Skipping as requested by unless
+2021-04-19 13:38:12 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <apt_plugin.AptStepRunner object at 0x7fecaff0cc70>>
+2021-04-19 13:38:12 INFO Running step: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:12 INFO Skipping as requested by unless
+2021-04-19 13:38:12 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <cache_rootfs_plugin.MakeCacheStepRunner object at 0x7fecaff0cbe0>>
+2021-04-19 13:38:12 INFO Running step: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:38:12 INFO Calling <bound method AnsibleStepRunner.run of <ansible_plugin.AnsibleStepRunner object at 0x7fecaff0cca0>>
+2021-04-19 13:38:12 INFO Created /tmp/tmpijpkl9p3 for Ansible inventory
+2021-04-19 13:38:12 INFO Created /tmp/tmpsug2pqt1 for Ansible variables
+2021-04-19 13:38:12 INFO Exec: ['ansible-playbook', '-c', 'chroot', '-i', '/tmp/tmpijpkl9p3', '-e', '@/tmp/tmpsug2pqt1', 'hostnamePassword.yml']
+2021-04-19 13:38:13 DEBUG STDOUT: 
+PLAY [image] **********************************************************************
+
+TASK [Gathering Facts] ************************************************************
+fatal: [/tmp/tmprasi749r]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"setup": {"failed": true, "module_stderr": "/bin/sh: 1: /usr/bin/python3: not found\n", "module_stdout": "", "msg": "The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error", "rc": 127}}, "msg": "The following modules failed to execute: setup\n"}
+
+PLAY RECAP ************************************************************************
+/tmp/tmprasi749r           : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+2021-04-19 13:38:13 DEBUG STDERR: 
+2021-04-19 13:38:13 ERROR Program failed: 2
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:38:13 ERROR RuncmdError('Program failed: 2')
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:38:13 INFO Something went wrong, cleaning up!
+2021-04-19 13:38:13 INFO Running teardown: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:38:13 INFO Calling <bound method AnsibleStepRunner.teardown of <ansible_plugin.AnsibleStepRunner object at 0x7fecaff0cca0>>
+2021-04-19 13:38:13 INFO Removing /tmp/tmpijpkl9p3
+2021-04-19 13:38:13 INFO Running teardown: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:13 INFO Skipping as requested by unless
+2021-04-19 13:38:13 INFO Running teardown: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:13 INFO Skipping as requested by unless
+2021-04-19 13:38:13 INFO Running teardown: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:13 INFO Skipping as requested by unless
+2021-04-19 13:38:13 INFO Running teardown: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:13 INFO Skipping as requested by unless
+2021-04-19 13:38:13 INFO Running teardown: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:38:13 INFO Skipping as requested by unless
+2021-04-19 13:38:13 INFO Running teardown: {'unpack-rootfs': '/'}
+2021-04-19 13:38:13 INFO Calling <bound method StepRunnerInterface.teardown of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fecaff0ca60>>
+2021-04-19 13:38:13 INFO Running teardown: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:38:13 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7fecaff0ca90>>
+2021-04-19 13:38:13 DEBUG Unmounting /tmp/tmprasi749r/.//boot/firmware and everything on top of it
+2021-04-19 13:38:13 WARNING Not mounted: /tmp/tmprasi749r/.//boot/firmware
+2021-04-19 13:38:13 INFO Running teardown: {'mount': '/'}
+2021-04-19 13:38:13 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7fecaff0ca90>>
+2021-04-19 13:38:13 DEBUG Unmounting /tmp/tmprasi749r and everything on top of it
+2021-04-19 13:38:16 DEBUG Finished unmounting /tmp/tmprasi749r
+2021-04-19 13:38:16 INFO Running teardown: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:38:16 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7fecaff0ca30>>
+2021-04-19 13:38:16 INFO Running teardown: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:38:16 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7fecaff0ca30>>
+2021-04-19 13:38:16 INFO Running teardown: {'kpartx': 't49.img'}
+2021-04-19 13:38:16 INFO Calling <bound method KpartxStepRunner.teardown of <kpartx_plugin.KpartxStepRunner object at 0x7fecaff0ca00>>
+2021-04-19 13:38:16 INFO Exec: ['kpartx', '-dsv', 't49.img']
+2021-04-19 13:38:17 DEBUG STDOUT: del devmap : loop0p2
+del devmap : loop0p1
+
+2021-04-19 13:38:17 DEBUG STDERR: loop deleted : /dev/loop0
+
+2021-04-19 13:38:17 INFO Running teardown: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:38:17 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7fecaff0cc40>>
+2021-04-19 13:38:17 INFO Running teardown: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:38:17 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7fecaff0cc40>>
+2021-04-19 13:38:17 INFO Running teardown: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:38:17 INFO Calling <bound method StepRunnerInterface.teardown of <mklabel_plugin.MklabelStepRunner object at 0x7fecaff0cd30>>
+2021-04-19 13:38:17 INFO Running teardown: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:38:17 INFO Calling <bound method StepRunnerInterface.teardown of <mkimg_plugin.MkimgStepRunner object at 0x7fecaff0cac0>>
+2021-04-19 13:38:17 ERROR An error occurred, exiting
+2021-04-19 13:40:16 INFO Starting vmdb2 version 0.22
+2021-04-19 13:40:16 INFO Load spec file raspi_4_bullseye_49.yaml
+2021-04-19 13:40:16 INFO Exec: ['dpkg', '--print-architecture']
+2021-04-19 13:40:16 DEBUG STDOUT: amd64
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Running step: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:40:16 INFO Calling <bound method MkimgStepRunner.run of <mkimg_plugin.MkimgStepRunner object at 0x7f9fcdb58ac0>>
+2021-04-19 13:40:16 INFO Exec: ['qemu-img', 'create', '-f', 'raw', 't49.img', '1500M']
+2021-04-19 13:40:16 DEBUG STDOUT: Formatting 't49.img', fmt=raw size=1572864000
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkimg_plugin.MkimgStepRunner object at 0x7f9fcdb58ac0>>
+2021-04-19 13:40:16 INFO Running step: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:40:16 INFO Calling <bound method MklabelStepRunner.run of <mklabel_plugin.MklabelStepRunner object at 0x7f9fcdb58d30>>
+2021-04-19 13:40:16 INFO Exec: ['parted', '-s', 't49.img', 'mklabel', 'msdos']
+2021-04-19 13:40:16 DEBUG STDOUT: 
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mklabel_plugin.MklabelStepRunner object at 0x7f9fcdb58d30>>
+2021-04-19 13:40:16 INFO Running step: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:40:16 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7f9fcdb58c40>>
+2021-04-19 13:40:16 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:40:16 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'fat32', '0%', '20%']
+2021-04-19 13:40:16 DEBUG STDOUT: 
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:40:16 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7f9fcdb58c40>>
+2021-04-19 13:40:16 INFO Running step: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:40:16 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7f9fcdb58c40>>
+2021-04-19 13:40:16 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:40:16 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'ext2', '20%', '100%']
+2021-04-19 13:40:16 DEBUG STDOUT: 
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:40:16 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+2:315MB:1573MB:1258MB:::;
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7f9fcdb58c40>>
+2021-04-19 13:40:16 INFO Running step: {'kpartx': 't49.img'}
+2021-04-19 13:40:16 INFO Calling <bound method KpartxStepRunner.run of <kpartx_plugin.KpartxStepRunner object at 0x7f9fcdb58a00>>
+2021-04-19 13:40:16 INFO Exec: ['kpartx', '-asv', 't49.img']
+2021-04-19 13:40:16 DEBUG STDOUT: add map loop0p1 (254:14): 0 612352 linear 7:0 2048
+add map loop0p2 (254:15): 0 2457600 linear 7:0 614400
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO remembering /dev/mapper/loop0p1 as /boot
+2021-04-19 13:40:16 INFO remembering /dev/mapper/loop0p2 as /
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <kpartx_plugin.KpartxStepRunner object at 0x7f9fcdb58a00>>
+2021-04-19 13:40:16 INFO Running step: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:40:16 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7f9fcdb58a30>>
+2021-04-19 13:40:16 INFO Exec: ['/sbin/mkfs', '-t', 'vfat', '-n', 'RASPIFIRM', '/dev/mapper/loop0p1']
+2021-04-19 13:40:16 DEBUG STDOUT: mkfs.fat 4.2 (2021-01-31)
+
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7f9fcdb58a30>>
+2021-04-19 13:40:16 INFO Running step: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:40:16 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7f9fcdb58a30>>
+2021-04-19 13:40:16 INFO Exec: ['/sbin/mkfs', '-t', 'ext4', '-L', 'RASPIROOT', '/dev/mapper/loop0p2']
+2021-04-19 13:40:16 DEBUG STDOUT: Discarding device blocks:   4096/307200             done                            
+Creating filesystem with 307200 4k blocks and 76800 inodes
+Filesystem UUID: 91d03131-5c68-4fa7-bdea-fbf33966dd0a
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/10     done                            
+Writing inode tables:  0/10     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/10     done
+
+
+2021-04-19 13:40:16 DEBUG STDERR: mke2fs 1.46.2 (28-Feb-2021)
+
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7f9fcdb58a30>>
+2021-04-19 13:40:16 INFO Running step: {'mount': '/'}
+2021-04-19 13:40:16 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7f9fcdb58a90>>
+2021-04-19 13:40:16 INFO Exec: ['mount', '/dev/mapper/loop0p2', '/tmp/tmpnpp1a353']
+2021-04-19 13:40:16 DEBUG STDOUT: 
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7f9fcdb58a90>>
+2021-04-19 13:40:16 INFO Running step: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:40:16 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7f9fcdb58a90>>
+2021-04-19 13:40:16 INFO Exec: ['mount', '/dev/mapper/loop0p1', '/tmp/tmpnpp1a353/.//boot/firmware']
+2021-04-19 13:40:16 DEBUG STDOUT: 
+2021-04-19 13:40:16 DEBUG STDERR: 
+2021-04-19 13:40:16 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7f9fcdb58a90>>
+2021-04-19 13:40:16 INFO Running step: {'unpack-rootfs': '/'}
+2021-04-19 13:40:16 INFO Calling <bound method UnpackCacheStepRunner.run of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7f9fcdb58a60>>
+2021-04-19 13:40:16 DEBUG settings: {'rootfs-tarball': 't48.tar.gz'}
+2021-04-19 13:40:16 DEBUG tar_path: 't48.tar.gz'
+2021-04-19 13:40:16 INFO Exec: ['tar', '-C', '/tmp/tmpnpp1a353', '-xf', 't48.tar.gz', '--numeric-owner']
+2021-04-19 13:40:22 DEBUG STDOUT: 
+2021-04-19 13:40:22 DEBUG STDERR: 
+2021-04-19 13:40:22 INFO Exec: ['cp', '/etc/resolv.conf', '/tmp/tmpnpp1a353/etc/resolv.conf']
+2021-04-19 13:40:22 DEBUG STDOUT: 
+2021-04-19 13:40:22 DEBUG STDERR: 
+2021-04-19 13:40:22 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7f9fcdb58a60>>
+2021-04-19 13:40:22 INFO Running step: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:22 INFO Skipping as requested by unless
+2021-04-19 13:40:22 INFO Calling <bound method QemuDebootstrapStepRunner.run_even_if_skipped of <qemudebootstrap_plugin.QemuDebootstrapStepRunner object at 0x7f9fcdb589a0>>
+2021-04-19 13:40:22 INFO Exec: ['chroot', '/tmp/tmpnpp1a353', 'apt-get', 'update']
+2021-04-19 13:40:27 DEBUG STDOUT: Hit:1 http://deb.debian.org/debian bullseye InRelease
+Reading package lists...
+
+2021-04-19 13:40:27 DEBUG STDERR: 
+2021-04-19 13:40:27 INFO Running step: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:27 INFO Skipping as requested by unless
+2021-04-19 13:40:27 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <create_file_plugin.CreateFileStepRunner object at 0x7f9fcdb58940>>
+2021-04-19 13:40:27 INFO Running step: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:27 INFO Skipping as requested by unless
+2021-04-19 13:40:27 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <chroot_plugin.ChrootStepRunner object at 0x7f9fcdb58b20>>
+2021-04-19 13:40:27 INFO Running step: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:27 INFO Skipping as requested by unless
+2021-04-19 13:40:27 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <apt_plugin.AptStepRunner object at 0x7f9fcdb58c70>>
+2021-04-19 13:40:27 INFO Running step: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:27 INFO Skipping as requested by unless
+2021-04-19 13:40:27 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <cache_rootfs_plugin.MakeCacheStepRunner object at 0x7f9fcdb58be0>>
+2021-04-19 13:40:27 INFO Running step: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:40:27 INFO Calling <bound method AnsibleStepRunner.run of <ansible_plugin.AnsibleStepRunner object at 0x7f9fcdb58ca0>>
+2021-04-19 13:40:27 INFO Created /tmp/tmppa975564 for Ansible inventory
+2021-04-19 13:40:27 INFO Created /tmp/tmp6eivg9g5 for Ansible variables
+2021-04-19 13:40:27 INFO Exec: ['ansible-playbook', '-c', 'chroot', '-i', '/tmp/tmppa975564', '-e', '@/tmp/tmp6eivg9g5', 'hostnamePassword.yml']
+2021-04-19 13:40:29 DEBUG STDOUT: 
+PLAY [image] **********************************************************************
+
+TASK [Gathering Facts] ************************************************************
+fatal: [/tmp/tmpnpp1a353]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"setup": {"failed": true, "module_stderr": "/bin/sh: 1: /usr/bin/python3: not found\n", "module_stdout": "", "msg": "The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error", "rc": 127}}, "msg": "The following modules failed to execute: setup\n"}
+
+PLAY RECAP ************************************************************************
+/tmp/tmpnpp1a353           : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+2021-04-19 13:40:29 DEBUG STDERR: 
+2021-04-19 13:40:29 ERROR Program failed: 2
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:40:29 ERROR RuncmdError('Program failed: 2')
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:40:29 INFO Something went wrong, cleaning up!
+2021-04-19 13:40:29 INFO Running teardown: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:40:29 INFO Calling <bound method AnsibleStepRunner.teardown of <ansible_plugin.AnsibleStepRunner object at 0x7f9fcdb58ca0>>
+2021-04-19 13:40:29 INFO Removing /tmp/tmppa975564
+2021-04-19 13:40:29 INFO Running teardown: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:29 INFO Skipping as requested by unless
+2021-04-19 13:40:29 INFO Running teardown: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:29 INFO Skipping as requested by unless
+2021-04-19 13:40:29 INFO Running teardown: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:29 INFO Skipping as requested by unless
+2021-04-19 13:40:29 INFO Running teardown: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:29 INFO Skipping as requested by unless
+2021-04-19 13:40:29 INFO Running teardown: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:40:29 INFO Skipping as requested by unless
+2021-04-19 13:40:29 INFO Running teardown: {'unpack-rootfs': '/'}
+2021-04-19 13:40:29 INFO Calling <bound method StepRunnerInterface.teardown of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7f9fcdb58a60>>
+2021-04-19 13:40:29 INFO Running teardown: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:40:29 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7f9fcdb58a90>>
+2021-04-19 13:40:29 DEBUG Unmounting /tmp/tmpnpp1a353/.//boot/firmware and everything on top of it
+2021-04-19 13:40:29 WARNING Not mounted: /tmp/tmpnpp1a353/.//boot/firmware
+2021-04-19 13:40:29 INFO Running teardown: {'mount': '/'}
+2021-04-19 13:40:29 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7f9fcdb58a90>>
+2021-04-19 13:40:29 DEBUG Unmounting /tmp/tmpnpp1a353 and everything on top of it
+2021-04-19 13:40:31 DEBUG Finished unmounting /tmp/tmpnpp1a353
+2021-04-19 13:40:31 INFO Running teardown: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:40:31 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7f9fcdb58a30>>
+2021-04-19 13:40:31 INFO Running teardown: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:40:31 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7f9fcdb58a30>>
+2021-04-19 13:40:31 INFO Running teardown: {'kpartx': 't49.img'}
+2021-04-19 13:40:31 INFO Calling <bound method KpartxStepRunner.teardown of <kpartx_plugin.KpartxStepRunner object at 0x7f9fcdb58a00>>
+2021-04-19 13:40:31 INFO Exec: ['kpartx', '-dsv', 't49.img']
+2021-04-19 13:40:31 DEBUG STDOUT: del devmap : loop0p2
+del devmap : loop0p1
+
+2021-04-19 13:40:31 DEBUG STDERR: loop deleted : /dev/loop0
+
+2021-04-19 13:40:31 INFO Running teardown: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:40:31 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7f9fcdb58c40>>
+2021-04-19 13:40:31 INFO Running teardown: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:40:31 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7f9fcdb58c40>>
+2021-04-19 13:40:31 INFO Running teardown: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:40:31 INFO Calling <bound method StepRunnerInterface.teardown of <mklabel_plugin.MklabelStepRunner object at 0x7f9fcdb58d30>>
+2021-04-19 13:40:31 INFO Running teardown: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:40:31 INFO Calling <bound method StepRunnerInterface.teardown of <mkimg_plugin.MkimgStepRunner object at 0x7f9fcdb58ac0>>
+2021-04-19 13:40:31 ERROR An error occurred, exiting
+2021-04-19 13:42:36 INFO Starting vmdb2 version 0.22
+2021-04-19 13:42:36 INFO Load spec file raspi_4_bullseye_49.yaml
+2021-04-19 13:42:36 INFO Exec: ['dpkg', '--print-architecture']
+2021-04-19 13:42:36 DEBUG STDOUT: amd64
+
+2021-04-19 13:42:36 DEBUG STDERR: 
+2021-04-19 13:42:36 INFO Running step: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:42:36 INFO Calling <bound method MkimgStepRunner.run of <mkimg_plugin.MkimgStepRunner object at 0x7fc87f304ac0>>
+2021-04-19 13:42:36 INFO Exec: ['qemu-img', 'create', '-f', 'raw', 't49.img', '1500M']
+2021-04-19 13:42:37 DEBUG STDOUT: Formatting 't49.img', fmt=raw size=1572864000
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkimg_plugin.MkimgStepRunner object at 0x7fc87f304ac0>>
+2021-04-19 13:42:37 INFO Running step: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:42:37 INFO Calling <bound method MklabelStepRunner.run of <mklabel_plugin.MklabelStepRunner object at 0x7fc87f304d30>>
+2021-04-19 13:42:37 INFO Exec: ['parted', '-s', 't49.img', 'mklabel', 'msdos']
+2021-04-19 13:42:37 DEBUG STDOUT: 
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mklabel_plugin.MklabelStepRunner object at 0x7fc87f304d30>>
+2021-04-19 13:42:37 INFO Running step: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:42:37 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7fc87f304c40>>
+2021-04-19 13:42:37 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:42:37 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'fat32', '0%', '20%']
+2021-04-19 13:42:37 DEBUG STDOUT: 
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:42:37 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7fc87f304c40>>
+2021-04-19 13:42:37 INFO Running step: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:42:37 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7fc87f304c40>>
+2021-04-19 13:42:37 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:42:37 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'ext2', '20%', '100%']
+2021-04-19 13:42:37 DEBUG STDOUT: 
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:42:37 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+2:315MB:1573MB:1258MB:::;
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7fc87f304c40>>
+2021-04-19 13:42:37 INFO Running step: {'kpartx': 't49.img'}
+2021-04-19 13:42:37 INFO Calling <bound method KpartxStepRunner.run of <kpartx_plugin.KpartxStepRunner object at 0x7fc87f304a00>>
+2021-04-19 13:42:37 INFO Exec: ['kpartx', '-asv', 't49.img']
+2021-04-19 13:42:37 DEBUG STDOUT: add map loop0p1 (254:14): 0 612352 linear 7:0 2048
+add map loop0p2 (254:15): 0 2457600 linear 7:0 614400
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO remembering /dev/mapper/loop0p1 as /boot
+2021-04-19 13:42:37 INFO remembering /dev/mapper/loop0p2 as /
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <kpartx_plugin.KpartxStepRunner object at 0x7fc87f304a00>>
+2021-04-19 13:42:37 INFO Running step: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:42:37 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7fc87f304a30>>
+2021-04-19 13:42:37 INFO Exec: ['/sbin/mkfs', '-t', 'vfat', '-n', 'RASPIFIRM', '/dev/mapper/loop0p1']
+2021-04-19 13:42:37 DEBUG STDOUT: mkfs.fat 4.2 (2021-01-31)
+
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7fc87f304a30>>
+2021-04-19 13:42:37 INFO Running step: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:42:37 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7fc87f304a30>>
+2021-04-19 13:42:37 INFO Exec: ['/sbin/mkfs', '-t', 'ext4', '-L', 'RASPIROOT', '/dev/mapper/loop0p2']
+2021-04-19 13:42:37 DEBUG STDOUT: Discarding device blocks:   4096/307200             done                            
+Creating filesystem with 307200 4k blocks and 76800 inodes
+Filesystem UUID: dba35f36-f723-4bf2-8c1e-7149cab6f720
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/10     done                            
+Writing inode tables:  0/10     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/10     done
+
+
+2021-04-19 13:42:37 DEBUG STDERR: mke2fs 1.46.2 (28-Feb-2021)
+
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7fc87f304a30>>
+2021-04-19 13:42:37 INFO Running step: {'mount': '/'}
+2021-04-19 13:42:37 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7fc87f304a90>>
+2021-04-19 13:42:37 INFO Exec: ['mount', '/dev/mapper/loop0p2', '/tmp/tmp460b_469']
+2021-04-19 13:42:37 DEBUG STDOUT: 
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7fc87f304a90>>
+2021-04-19 13:42:37 INFO Running step: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:42:37 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7fc87f304a90>>
+2021-04-19 13:42:37 INFO Exec: ['mount', '/dev/mapper/loop0p1', '/tmp/tmp460b_469/.//boot/firmware']
+2021-04-19 13:42:37 DEBUG STDOUT: 
+2021-04-19 13:42:37 DEBUG STDERR: 
+2021-04-19 13:42:37 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7fc87f304a90>>
+2021-04-19 13:42:37 INFO Running step: {'unpack-rootfs': '/'}
+2021-04-19 13:42:37 INFO Calling <bound method UnpackCacheStepRunner.run of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fc87f304a60>>
+2021-04-19 13:42:37 DEBUG settings: {'rootfs-tarball': 't48.tar.gz'}
+2021-04-19 13:42:37 DEBUG tar_path: 't48.tar.gz'
+2021-04-19 13:42:37 INFO Exec: ['tar', '-C', '/tmp/tmp460b_469', '-xf', 't48.tar.gz', '--numeric-owner']
+2021-04-19 13:42:44 DEBUG STDOUT: 
+2021-04-19 13:42:44 DEBUG STDERR: 
+2021-04-19 13:42:44 INFO Exec: ['cp', '/etc/resolv.conf', '/tmp/tmp460b_469/etc/resolv.conf']
+2021-04-19 13:42:44 DEBUG STDOUT: 
+2021-04-19 13:42:44 DEBUG STDERR: 
+2021-04-19 13:42:44 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fc87f304a60>>
+2021-04-19 13:42:44 INFO Running step: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:44 INFO Skipping as requested by unless
+2021-04-19 13:42:44 INFO Calling <bound method QemuDebootstrapStepRunner.run_even_if_skipped of <qemudebootstrap_plugin.QemuDebootstrapStepRunner object at 0x7fc87f3049a0>>
+2021-04-19 13:42:44 INFO Exec: ['chroot', '/tmp/tmp460b_469', 'apt-get', 'update']
+2021-04-19 13:42:51 DEBUG STDOUT: Hit:1 http://deb.debian.org/debian bullseye InRelease
+Reading package lists...
+
+2021-04-19 13:42:51 DEBUG STDERR: 
+2021-04-19 13:42:51 INFO Running step: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:51 INFO Skipping as requested by unless
+2021-04-19 13:42:51 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <create_file_plugin.CreateFileStepRunner object at 0x7fc87f304940>>
+2021-04-19 13:42:51 INFO Running step: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:51 INFO Skipping as requested by unless
+2021-04-19 13:42:51 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <chroot_plugin.ChrootStepRunner object at 0x7fc87f304b20>>
+2021-04-19 13:42:51 INFO Running step: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:51 INFO Skipping as requested by unless
+2021-04-19 13:42:51 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <apt_plugin.AptStepRunner object at 0x7fc87f304c70>>
+2021-04-19 13:42:51 INFO Running step: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:51 INFO Skipping as requested by unless
+2021-04-19 13:42:51 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <cache_rootfs_plugin.MakeCacheStepRunner object at 0x7fc87f304be0>>
+2021-04-19 13:42:51 INFO Running step: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:42:51 INFO Calling <bound method AnsibleStepRunner.run of <ansible_plugin.AnsibleStepRunner object at 0x7fc87f304ca0>>
+2021-04-19 13:42:51 INFO Created /tmp/tmp9w_p2o91 for Ansible inventory
+2021-04-19 13:42:51 INFO Created /tmp/tmpnkn6ncg9 for Ansible variables
+2021-04-19 13:42:51 INFO Exec: ['ansible-playbook', '-c', 'chroot', '-i', '/tmp/tmp9w_p2o91', '-e', '@/tmp/tmpnkn6ncg9', 'hostnamePassword.yml']
+2021-04-19 13:42:52 DEBUG STDOUT: 
+PLAY [image] **********************************************************************
+
+TASK [Gathering Facts] ************************************************************
+fatal: [/tmp/tmp460b_469]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"setup": {"failed": true, "module_stderr": "/bin/sh: 1: /usr/bin/python3: not found\n", "module_stdout": "", "msg": "The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error", "rc": 127}}, "msg": "The following modules failed to execute: setup\n"}
+
+PLAY RECAP ************************************************************************
+/tmp/tmp460b_469           : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+2021-04-19 13:42:52 DEBUG STDERR: 
+2021-04-19 13:42:52 ERROR Program failed: 2
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:42:52 ERROR RuncmdError('Program failed: 2')
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:42:52 INFO Something went wrong, cleaning up!
+2021-04-19 13:42:52 INFO Running teardown: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:42:52 INFO Calling <bound method AnsibleStepRunner.teardown of <ansible_plugin.AnsibleStepRunner object at 0x7fc87f304ca0>>
+2021-04-19 13:42:52 INFO Removing /tmp/tmp9w_p2o91
+2021-04-19 13:42:52 INFO Running teardown: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:52 INFO Skipping as requested by unless
+2021-04-19 13:42:52 INFO Running teardown: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:52 INFO Skipping as requested by unless
+2021-04-19 13:42:52 INFO Running teardown: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:52 INFO Skipping as requested by unless
+2021-04-19 13:42:52 INFO Running teardown: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:52 INFO Skipping as requested by unless
+2021-04-19 13:42:52 INFO Running teardown: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:42:52 INFO Skipping as requested by unless
+2021-04-19 13:42:52 INFO Running teardown: {'unpack-rootfs': '/'}
+2021-04-19 13:42:52 INFO Calling <bound method StepRunnerInterface.teardown of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7fc87f304a60>>
+2021-04-19 13:42:52 INFO Running teardown: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:42:52 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7fc87f304a90>>
+2021-04-19 13:42:52 DEBUG Unmounting /tmp/tmp460b_469/.//boot/firmware and everything on top of it
+2021-04-19 13:42:52 WARNING Not mounted: /tmp/tmp460b_469/.//boot/firmware
+2021-04-19 13:42:52 INFO Running teardown: {'mount': '/'}
+2021-04-19 13:42:52 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7fc87f304a90>>
+2021-04-19 13:42:52 DEBUG Unmounting /tmp/tmp460b_469 and everything on top of it
+2021-04-19 13:42:54 DEBUG Finished unmounting /tmp/tmp460b_469
+2021-04-19 13:42:54 INFO Running teardown: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:42:54 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7fc87f304a30>>
+2021-04-19 13:42:54 INFO Running teardown: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:42:54 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7fc87f304a30>>
+2021-04-19 13:42:54 INFO Running teardown: {'kpartx': 't49.img'}
+2021-04-19 13:42:54 INFO Calling <bound method KpartxStepRunner.teardown of <kpartx_plugin.KpartxStepRunner object at 0x7fc87f304a00>>
+2021-04-19 13:42:54 INFO Exec: ['kpartx', '-dsv', 't49.img']
+2021-04-19 13:42:54 DEBUG STDOUT: del devmap : loop0p2
+del devmap : loop0p1
+
+2021-04-19 13:42:54 DEBUG STDERR: loop deleted : /dev/loop0
+
+2021-04-19 13:42:54 INFO Running teardown: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:42:54 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7fc87f304c40>>
+2021-04-19 13:42:54 INFO Running teardown: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:42:54 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7fc87f304c40>>
+2021-04-19 13:42:54 INFO Running teardown: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:42:54 INFO Calling <bound method StepRunnerInterface.teardown of <mklabel_plugin.MklabelStepRunner object at 0x7fc87f304d30>>
+2021-04-19 13:42:54 INFO Running teardown: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:42:54 INFO Calling <bound method StepRunnerInterface.teardown of <mkimg_plugin.MkimgStepRunner object at 0x7fc87f304ac0>>
+2021-04-19 13:42:54 ERROR An error occurred, exiting
+2021-04-19 13:43:20 INFO Starting vmdb2 version 0.22
+2021-04-19 13:43:20 INFO Load spec file raspi_4_bullseye_49.yaml
+2021-04-19 13:43:20 INFO Exec: ['dpkg', '--print-architecture']
+2021-04-19 13:43:20 DEBUG STDOUT: amd64
+
+2021-04-19 13:43:20 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Running step: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:43:21 INFO Calling <bound method MkimgStepRunner.run of <mkimg_plugin.MkimgStepRunner object at 0x7f7f0be01ac0>>
+2021-04-19 13:43:21 INFO Exec: ['qemu-img', 'create', '-f', 'raw', 't49.img', '1500M']
+2021-04-19 13:43:21 DEBUG STDOUT: Formatting 't49.img', fmt=raw size=1572864000
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkimg_plugin.MkimgStepRunner object at 0x7f7f0be01ac0>>
+2021-04-19 13:43:21 INFO Running step: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:43:21 INFO Calling <bound method MklabelStepRunner.run of <mklabel_plugin.MklabelStepRunner object at 0x7f7f0be01d30>>
+2021-04-19 13:43:21 INFO Exec: ['parted', '-s', 't49.img', 'mklabel', 'msdos']
+2021-04-19 13:43:21 DEBUG STDOUT: 
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mklabel_plugin.MklabelStepRunner object at 0x7f7f0be01d30>>
+2021-04-19 13:43:21 INFO Running step: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:43:21 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7f7f0be01c40>>
+2021-04-19 13:43:21 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:43:21 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'fat32', '0%', '20%']
+2021-04-19 13:43:21 DEBUG STDOUT: 
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:43:21 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7f7f0be01c40>>
+2021-04-19 13:43:21 INFO Running step: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:43:21 INFO Calling <bound method MkpartStepRunner.run of <mkpart_plugin.MkpartStepRunner object at 0x7f7f0be01c40>>
+2021-04-19 13:43:21 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:43:21 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Exec: ['parted', '-s', '/home/frank/vmdb2/t49.img', '--', 'mkpart', 'primary', 'ext2', '20%', '100%']
+2021-04-19 13:43:21 DEBUG STDOUT: 
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Exec: ['parted', '-m', '/home/frank/vmdb2/t49.img', 'print']
+2021-04-19 13:43:21 DEBUG STDOUT: BYT;
+/home/frank/vmdb2/t49.img:1573MB:file:512:512:msdos::;
+1:1049kB:315MB:314MB:::lba;
+2:315MB:1573MB:1258MB:::;
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkpart_plugin.MkpartStepRunner object at 0x7f7f0be01c40>>
+2021-04-19 13:43:21 INFO Running step: {'kpartx': 't49.img'}
+2021-04-19 13:43:21 INFO Calling <bound method KpartxStepRunner.run of <kpartx_plugin.KpartxStepRunner object at 0x7f7f0be01a00>>
+2021-04-19 13:43:21 INFO Exec: ['kpartx', '-asv', 't49.img']
+2021-04-19 13:43:21 DEBUG STDOUT: add map loop0p1 (254:14): 0 612352 linear 7:0 2048
+add map loop0p2 (254:15): 0 2457600 linear 7:0 614400
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO remembering /dev/mapper/loop0p1 as /boot
+2021-04-19 13:43:21 INFO remembering /dev/mapper/loop0p2 as /
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <kpartx_plugin.KpartxStepRunner object at 0x7f7f0be01a00>>
+2021-04-19 13:43:21 INFO Running step: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:43:21 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7f7f0be01a30>>
+2021-04-19 13:43:21 INFO Exec: ['/sbin/mkfs', '-t', 'vfat', '-n', 'RASPIFIRM', '/dev/mapper/loop0p1']
+2021-04-19 13:43:21 DEBUG STDOUT: mkfs.fat 4.2 (2021-01-31)
+
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7f7f0be01a30>>
+2021-04-19 13:43:21 INFO Running step: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:43:21 INFO Calling <bound method MkfsStepRunner.run of <mkfs_plugin.MkfsStepRunner object at 0x7f7f0be01a30>>
+2021-04-19 13:43:21 INFO Exec: ['/sbin/mkfs', '-t', 'ext4', '-L', 'RASPIROOT', '/dev/mapper/loop0p2']
+2021-04-19 13:43:21 DEBUG STDOUT: Discarding device blocks:   4096/307200             done                            
+Creating filesystem with 307200 4k blocks and 76800 inodes
+Filesystem UUID: 73ea496a-c326-408c-94df-dd921703b304
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/10     done                            
+Writing inode tables:  0/10     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/10     done
+
+
+2021-04-19 13:43:21 DEBUG STDERR: mke2fs 1.46.2 (28-Feb-2021)
+
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mkfs_plugin.MkfsStepRunner object at 0x7f7f0be01a30>>
+2021-04-19 13:43:21 INFO Running step: {'mount': '/'}
+2021-04-19 13:43:21 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7f7f0be01a90>>
+2021-04-19 13:43:21 INFO Exec: ['mount', '/dev/mapper/loop0p2', '/tmp/tmpmghhs449']
+2021-04-19 13:43:21 DEBUG STDOUT: 
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7f7f0be01a90>>
+2021-04-19 13:43:21 INFO Running step: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:43:21 INFO Calling <bound method MountStepRunner.run of <mount_plugin.MountStepRunner object at 0x7f7f0be01a90>>
+2021-04-19 13:43:21 INFO Exec: ['mount', '/dev/mapper/loop0p1', '/tmp/tmpmghhs449/.//boot/firmware']
+2021-04-19 13:43:21 DEBUG STDOUT: 
+2021-04-19 13:43:21 DEBUG STDERR: 
+2021-04-19 13:43:21 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <mount_plugin.MountStepRunner object at 0x7f7f0be01a90>>
+2021-04-19 13:43:21 INFO Running step: {'unpack-rootfs': '/'}
+2021-04-19 13:43:21 INFO Calling <bound method UnpackCacheStepRunner.run of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7f7f0be01a60>>
+2021-04-19 13:43:21 DEBUG settings: {'rootfs-tarball': 't48.tar.gz'}
+2021-04-19 13:43:21 DEBUG tar_path: 't48.tar.gz'
+2021-04-19 13:43:21 INFO Exec: ['tar', '-C', '/tmp/tmpmghhs449', '-xf', 't48.tar.gz', '--numeric-owner']
+2021-04-19 13:43:28 DEBUG STDOUT: 
+2021-04-19 13:43:28 DEBUG STDERR: 
+2021-04-19 13:43:28 INFO Exec: ['cp', '/etc/resolv.conf', '/tmp/tmpmghhs449/etc/resolv.conf']
+2021-04-19 13:43:28 DEBUG STDOUT: 
+2021-04-19 13:43:28 DEBUG STDERR: 
+2021-04-19 13:43:28 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7f7f0be01a60>>
+2021-04-19 13:43:28 INFO Running step: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:28 INFO Skipping as requested by unless
+2021-04-19 13:43:28 INFO Calling <bound method QemuDebootstrapStepRunner.run_even_if_skipped of <qemudebootstrap_plugin.QemuDebootstrapStepRunner object at 0x7f7f0be019a0>>
+2021-04-19 13:43:28 INFO Exec: ['chroot', '/tmp/tmpmghhs449', 'apt-get', 'update']
+2021-04-19 13:43:33 DEBUG STDOUT: Hit:1 http://deb.debian.org/debian bullseye InRelease
+Reading package lists...
+
+2021-04-19 13:43:33 DEBUG STDERR: 
+2021-04-19 13:43:33 INFO Running step: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:33 INFO Skipping as requested by unless
+2021-04-19 13:43:33 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <create_file_plugin.CreateFileStepRunner object at 0x7f7f0be01940>>
+2021-04-19 13:43:33 INFO Running step: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:33 INFO Skipping as requested by unless
+2021-04-19 13:43:33 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <chroot_plugin.ChrootStepRunner object at 0x7f7f0be01b20>>
+2021-04-19 13:43:33 INFO Running step: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:33 INFO Skipping as requested by unless
+2021-04-19 13:43:33 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <apt_plugin.AptStepRunner object at 0x7f7f0be01c70>>
+2021-04-19 13:43:33 INFO Running step: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:33 INFO Skipping as requested by unless
+2021-04-19 13:43:33 INFO Calling <bound method StepRunnerInterface.run_even_if_skipped of <cache_rootfs_plugin.MakeCacheStepRunner object at 0x7f7f0be01be0>>
+2021-04-19 13:43:33 INFO Running step: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:43:33 INFO Calling <bound method AnsibleStepRunner.run of <ansible_plugin.AnsibleStepRunner object at 0x7f7f0be01ca0>>
+2021-04-19 13:43:33 INFO Created /tmp/tmp2cf73x_w for Ansible inventory
+2021-04-19 13:43:33 INFO Created /tmp/tmp6_35oa2i for Ansible variables
+2021-04-19 13:43:33 INFO Exec: ['ansible-playbook', '-c', 'chroot', '-i', '/tmp/tmp2cf73x_w', '-e', '@/tmp/tmp6_35oa2i', 'hostnamePassword.yml']
+2021-04-19 13:43:34 DEBUG STDOUT: 
+PLAY [image] **********************************************************************
+
+TASK [Gathering Facts] ************************************************************
+fatal: [/tmp/tmpmghhs449]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"setup": {"failed": true, "module_stderr": "/bin/sh: 1: /usr/bin/python3: not found\n", "module_stdout": "", "msg": "The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error", "rc": 127}}, "msg": "The following modules failed to execute: setup\n"}
+
+PLAY RECAP ************************************************************************
+/tmp/tmpmghhs449           : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+2021-04-19 13:43:34 DEBUG STDERR: 
+2021-04-19 13:43:34 ERROR Program failed: 2
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:43:34 ERROR RuncmdError('Program failed: 2')
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/vmdb/app.py", line 220, in run_steps_helper
+    method(values, settings, state)
+  File "/usr/lib/python3/dist-packages/vmdb/plugins/ansible_plugin.py", line 50, in run
+    vmdb.runcmd(
+  File "/usr/lib/python3/dist-packages/vmdb/runcmd.py", line 58, in runcmd
+    raise RuncmdError("Program failed: {}".format(p.returncode))
+vmdb.runcmd.RuncmdError: Program failed: 2
+2021-04-19 13:43:34 INFO Something went wrong, cleaning up!
+2021-04-19 13:43:34 INFO Running teardown: {'ansible': '/', 'playbook': 'hostnamePassword.yml'}
+2021-04-19 13:43:34 INFO Calling <bound method AnsibleStepRunner.teardown of <ansible_plugin.AnsibleStepRunner object at 0x7f7f0be01ca0>>
+2021-04-19 13:43:34 INFO Removing /tmp/tmp2cf73x_w
+2021-04-19 13:43:34 INFO Running teardown: {'cache-rootfs': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:34 INFO Skipping as requested by unless
+2021-04-19 13:43:34 INFO Running teardown: {'apt': 'install', 'packages': ['ssh', 'parted', 'dosfstools', 'iw', 'wpasupplicant', 'raspi-firmware', 'linux-image-arm64', 'firmware-brcm80211', 'python'], 'tag': '/', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:34 INFO Skipping as requested by unless
+2021-04-19 13:43:34 INFO Running teardown: {'chroot': '/', 'shell': 'apt-get update', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:34 INFO Skipping as requested by unless
+2021-04-19 13:43:34 INFO Running teardown: {'create-file': '/etc/apt/sources.list', 'trailing-newline': '1', 'contents': 'deb http://deb.debian.org/debian bullseye main contrib non-free\n# Uncomment after Bullseye becomes stable → deb http://deb.debian.org/debian-security bullseye/updates main contrib non-free\n# Backports are _not_ enabled by default.\n# Enable them by uncommenting the following line:\n# deb http://deb.debian.org/debian bullseye-backports main contrib non-free', 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:34 INFO Skipping as requested by unless
+2021-04-19 13:43:34 INFO Running teardown: {'qemu-debootstrap': 'bullseye', 'mirror': 'http://deb.debian.org/debian', 'target': '/', 'arch': 'arm64', 'components': ['main', 'contrib', 'non-free'], 'unless': 'rootfs_unpacked'}
+2021-04-19 13:43:34 INFO Skipping as requested by unless
+2021-04-19 13:43:34 INFO Running teardown: {'unpack-rootfs': '/'}
+2021-04-19 13:43:34 INFO Calling <bound method StepRunnerInterface.teardown of <unpack_rootfs_plugin.UnpackCacheStepRunner object at 0x7f7f0be01a60>>
+2021-04-19 13:43:34 INFO Running teardown: {'mount': '/boot', 'mount-on': '/', 'dirname': '/boot/firmware'}
+2021-04-19 13:43:34 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7f7f0be01a90>>
+2021-04-19 13:43:34 DEBUG Unmounting /tmp/tmpmghhs449/.//boot/firmware and everything on top of it
+2021-04-19 13:43:34 WARNING Not mounted: /tmp/tmpmghhs449/.//boot/firmware
+2021-04-19 13:43:34 INFO Running teardown: {'mount': '/'}
+2021-04-19 13:43:34 INFO Calling <bound method MountStepRunner.teardown of <mount_plugin.MountStepRunner object at 0x7f7f0be01a90>>
+2021-04-19 13:43:34 DEBUG Unmounting /tmp/tmpmghhs449 and everything on top of it
+2021-04-19 13:43:35 DEBUG Finished unmounting /tmp/tmpmghhs449
+2021-04-19 13:43:35 INFO Running teardown: {'mkfs': 'ext4', 'partition': '/', 'label': 'RASPIROOT'}
+2021-04-19 13:43:35 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7f7f0be01a30>>
+2021-04-19 13:43:35 INFO Running teardown: {'mkfs': 'vfat', 'partition': '/boot', 'label': 'RASPIFIRM'}
+2021-04-19 13:43:35 INFO Calling <bound method StepRunnerInterface.teardown of <mkfs_plugin.MkfsStepRunner object at 0x7f7f0be01a30>>
+2021-04-19 13:43:35 INFO Running teardown: {'kpartx': 't49.img'}
+2021-04-19 13:43:35 INFO Calling <bound method KpartxStepRunner.teardown of <kpartx_plugin.KpartxStepRunner object at 0x7f7f0be01a00>>
+2021-04-19 13:43:35 INFO Exec: ['kpartx', '-dsv', 't49.img']
+2021-04-19 13:43:35 DEBUG STDOUT: del devmap : loop0p2
+del devmap : loop0p1
+
+2021-04-19 13:43:35 DEBUG STDERR: loop deleted : /dev/loop0
+
+2021-04-19 13:43:35 INFO Running teardown: {'mkpart': 'primary', 'device': 't49.img', 'start': '20%', 'end': '100%', 'tag': '/'}
+2021-04-19 13:43:35 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7f7f0be01c40>>
+2021-04-19 13:43:35 INFO Running teardown: {'mkpart': 'primary', 'fs-type': 'fat32', 'device': 't49.img', 'start': '0%', 'end': '20%', 'tag': '/boot'}
+2021-04-19 13:43:35 INFO Calling <bound method StepRunnerInterface.teardown of <mkpart_plugin.MkpartStepRunner object at 0x7f7f0be01c40>>
+2021-04-19 13:43:35 INFO Running teardown: {'mklabel': 'msdos', 'device': 't49.img'}
+2021-04-19 13:43:35 INFO Calling <bound method StepRunnerInterface.teardown of <mklabel_plugin.MklabelStepRunner object at 0x7f7f0be01d30>>
+2021-04-19 13:43:35 INFO Running teardown: {'mkimg': 't49.img', 'size': '1500M'}
+2021-04-19 13:43:35 INFO Calling <bound method StepRunnerInterface.teardown of <mkimg_plugin.MkimgStepRunner object at 0x7f7f0be01ac0>>
+2021-04-19 13:43:35 ERROR An error occurred, exiting
